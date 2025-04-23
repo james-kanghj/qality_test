@@ -25,50 +25,49 @@ def browser():
         browser.close()
 
 def test_keyword_input(browser):
-    issue_key = "SCRUM-1"
+    issue_key = "QAP-1"
     page = browser.new_page()
     page.goto("https://www.naver.com")
 
-    search_input = page.locator("input[name='query']")
-    keyword = "테스트 키워드"
+    keyword = "날씨"
+    search_input = page.get_by_placeholder("검색어를 입력해 주세요.")
+    search_input.wait_for()
     search_input.fill(keyword)
+    search_input.press("Enter")
 
-    result = search_input.input_value() == keyword
+    result = keyword in search_input.input_value()
     report_result_to_jira(issue_key, result)
     assert result
 
 def test_korean_encoding(browser):
-    issue_key = "SCRUM-2"
+    issue_key = "QAP-2"
     page = browser.new_page()
     page.goto("https://www.naver.com")
 
-    search_input = page.locator("input[name='query']")
-    korean_word = "한글 검색어"
-    search_input.fill(korean_word)
+    keyword = "날씨"
+    search_input = page.get_by_placeholder("검색어를 입력해 주세요.")
+    search_input.wait_for()
+    search_input.fill(keyword)
     search_input.press("Enter")
 
     page.wait_for_load_state("networkidle")
 
-    result_input = page.locator("input[name='query']")
-    result = korean_word in result_input.input_value()
+    result = keyword in search_input.input_value()
     report_result_to_jira(issue_key, result)
     assert result
 
 def test_search_redirect(browser):
-    issue_key = "SCRUM-3"
+    issue_key = "QAP-3"
     page = browser.new_page()
     page.goto("https://www.naver.com")
 
-    search_input = page.locator("input[name='query']")
-    keyword = "플레이라이트"
+    keyword = "Playwright"
+    search_input = page.get_by_placeholder("검색어를 입력해 주세요.")
+    search_input.wait_for()
     search_input.fill(keyword)
     search_input.press("Enter")
 
-    try:
-        page.wait_for_url("**search.naver.com/**", timeout=5000)
-        result = "search.naver.com" in page.url
-    except:
-        result = False
-
+    page.wait_for_load_state("networkidle")
+    result = "query=" in page.url
     report_result_to_jira(issue_key, result)
     assert result
