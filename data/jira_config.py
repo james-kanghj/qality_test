@@ -1,0 +1,4 @@
+JIRA_BASE_URL = "https://jamescompanykr.atlassian.net"
+JIRA_EMAIL = "jamescompanykr@gmail.com"
+JIRA_API_TOKEN = "ATATT3xFfGF0ZEwr5oNxnNlcTUpgKWuAuvuOVt1O00sIPgYDkOESsJQFY__NAMhBaKVgJKiQgnQ-afDbuRdpVu8cPFBhwjO4Pk5DLZ7CZiHhcGtk8tkSdsA2NYLfZ2EANA9iTv0BcrSw4NcE6NYXARbSfx08QKGUhUX-0fdhtk0JS3Al71sR7v0=B657FFAA"
+JIRA_PROJECT_KEY = "QAP"  # 또는 PSTB 등
