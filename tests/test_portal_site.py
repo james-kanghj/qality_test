@@ -3,6 +3,7 @@ import requests
 from playwright.sync_api import sync_playwright
 from data.jira_config import JIRA_BASE_URL, JIRA_EMAIL, JIRA_API_TOKEN
 
+
 def report_result_to_jira(issue_key: str, result: bool):
     status = "✅ Passed" if result else "❌ Failed"
     url = f"{JIRA_BASE_URL}/rest/api/3/issue/{issue_key}/comment"
@@ -12,7 +13,21 @@ def report_result_to_jira(issue_key: str, result: bool):
     }
     auth = (JIRA_EMAIL, JIRA_API_TOKEN)
     payload = {
-        "body": f"*Playwright 테스트 결과*\n결과: {status}"
+        "body": {
+            "type": "doc",
+            "version": 1,
+            "content": [
+                {
+                    "type": "paragraph",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": f"Playwright 테스트 결과: {status}"
+                        }
+                    ]
+                }
+            ]
+        }
     }
     response = requests.post(url, headers=headers, auth=auth, json=payload)
     print(f"[{issue_key}] 결과 Jira에 기록됨: {response.status_code}")
@@ -25,6 +40,10 @@ def browser():
         browser.close()
 
 def test_keyword_input(browser):
+    print("BASE_URL:", JIRA_BASE_URL)
+    print("EMAIL:", JIRA_EMAIL)
+    print("TOKEN exists:", bool(JIRA_API_TOKEN))
+
     issue_key = "QAP-1"
     page = browser.new_page()
     page.goto("https://www.naver.com")
@@ -40,6 +59,10 @@ def test_keyword_input(browser):
     assert result
 
 def test_korean_encoding(browser):
+    print("BASE_URL:", JIRA_BASE_URL)
+    print("EMAIL:", JIRA_EMAIL)
+    print("TOKEN exists:", bool(JIRA_API_TOKEN))
+
     issue_key = "QAP-2"
     page = browser.new_page()
     page.goto("https://www.naver.com")
@@ -57,6 +80,10 @@ def test_korean_encoding(browser):
     assert result
 
 def test_search_redirect(browser):
+    print("BASE_URL:", JIRA_BASE_URL)
+    print("EMAIL:", JIRA_EMAIL)
+    print("TOKEN exists:", bool(JIRA_API_TOKEN))
+
     issue_key = "QAP-3"
     page = browser.new_page()
     page.goto("https://www.naver.com")
