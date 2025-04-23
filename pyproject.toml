@@ -1,0 +1,9 @@
+[project]
+name = "qality-playwright-test"
+version = "0.1.0"
+description = "Playwright test for QAlity Jira test cases"
+authors = ["James Company"]
+requires-python = ">=3.10"
+
+[tool.uv]
+# uv 관련 설정 가능
