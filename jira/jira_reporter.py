@@ -3,6 +3,8 @@
 import os
 import logging
 from data.jira_config import JIRA_BASE_URL, JIRA_EMAIL, JIRA_API_TOKEN
+from jira.jira_helper import post_comment_to_jira, get_transitions, transition_issue
+
 
 # 테스트 실패 결과를 기록할 로컬 로그 설정
 logging.basicConfig(
