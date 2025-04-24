@@ -1,6 +1,27 @@
-# QAlity - Playwright Test
+# 🧲 QAlity - Playwright Test Automation with Jira Integration
 
-This project automates the Naver search test based on Jira (QAlity) test cases using Playwright and Python.
+This project automates Naver search tests based on Jira (QAlity) issues using [Playwright](https://playwright.dev/) and Python. Test results are posted as Jira comments and issue statuses can be transitioned automatically.
+
+---
+
+## 📁 Project Structure
+
+```bash
+qality_test/
+├── tests/
+│   └── test_portal_site.py     # Playwright test cases
+├── jira/
+│   ├── jira_helper.py          # Low-level Jira API utilities
+│   └── jira_reporter.py        # High-level test result handling
+├── data/
+│   └── jira_config.py          # Environment variable configuration
+├── conftest.py                 # Pytest environment setup
+├── .env                        # Jira credentials
+├── requirements.txt
+└── README.md
+```
+
+---
 
 ## 📦 Requirements
 
@@ -8,6 +29,8 @@ This project automates the Naver search test based on Jira (QAlity) test cases u
 - `uv` (optional but recommended)
 - Jira Cloud (with API access enabled)
 - Playwright
+
+---
 
 ## 🔧 Setup Instructions
 
@@ -18,14 +41,16 @@ git clone https://github.com/james-kanghj/qality_test.git
 cd qality_test
 ```
 
-### 2. Create virtual environment (if using `uv`)
+### 2. Create virtual environment
+
+Using `uv` (recommended):
 
 ```bash
 uv venv .venv
 source .venv/bin/activate
 ```
 
-Or using traditional Python:
+Or using built-in Python venv:
 
 ```bash
 python3 -m venv .venv
@@ -38,15 +63,26 @@ source .venv/bin/activate
 uv pip install -r requirements.txt
 ```
 
-### 4. Create a `.env` file in the root directory:
+### 4. Create a `.env` File
 
-```
+In the root directory, create a file named `.env` with the following:
+
+```env
 JIRA_BASE_URL=https://your-domain.atlassian.net
 JIRA_EMAIL=your-email@example.com
 JIRA_API_TOKEN=your-api-token
 ```
 
-> ✅ The `.env` file is used to load Jira credentials for API calls.
+✅ This file is used to securely load Jira credentials for API access.
+
+### How to Get Your Jira API Token
+
+- Go to: [https://id.atlassian.com/manage-profile/security/api-tokens](https://id.atlassian.com/manage-profile/security/api-tokens)
+- Click **Create API token**
+- Enter a label and confirm
+- Copy the generated token and add it to your `.env`
+
+---
 
 ## 🚀 Run Tests
 
@@ -55,24 +91,47 @@ pytest -s tests/
 ```
 
 Tests will automatically:
-- Open Chromium browser (default: headless = False if configured)
-- Perform search on Naver
-- Report results as comments to corresponding Jira issues
-- Attempt to transition Jira issue status based on test outcome (e.g., to "완료" or "진행 중")
-
-## 🛠 Configuration
-
-To run tests with visible browser:
-```python
-# In conftest.py or test setup
-browser = p.chromium.launch(headless=False)
-```
-
-## 📄 Notes
-- Jira API requires ADF (Atlassian Document Format) for comments.
-- Ensure Jira user has access to the project and permission to comment and transition issues.
-- `.env` must be placed at the project root.
+- Launch a Chromium browser (UI visible if configured)
+- Perform search actions on Naver
+- Report results as Jira comments
+- Transition Jira issue status (e.g., "To Do" → "Done")
 
 ---
 
-Happy Testing! 🚀
+## 🛠 Configuration
+
+To enable browser visibility during tests:
+
+```python
+# In conftest.py or test setup
+browser = p.chromium.launch(headless=False, slow_mo=300)
+```
+
+---
+
+## ✅ Features
+
+- Post Playwright test results to Jira issues using ADF (Atlassian Document Format)
+- Log failed test results to `test_failures.log`
+- Auto-transition Jira issue statuses based on outcome
+
+---
+
+## 📄 Test Scenarios
+
+- **QAP-1**: Validate keyword input (e.g., "날씨")
+- **QAP-2**: Force failure to test Jira integration
+- **QAP-3**: Check redirected URL for query string
+
+---
+
+## 📊 Logging
+
+- Failures are recorded in `test_failures.log` at the project root
+
+---
+
+## 📢 Contact
+
+- Author: [James Kang](mailto:jamescompanykr@gmail.com)
+- Company: James Company — Empowering QA Engineers
