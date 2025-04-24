@@ -35,7 +35,7 @@ def report_result_to_jira(issue_key: str, result: bool):
 @pytest.fixture(scope="session")
 def browser():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False, slow_mo=300)
         yield browser
         browser.close()
 
