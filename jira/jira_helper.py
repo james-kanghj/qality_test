@@ -16,7 +16,7 @@ def report_result_to_jira(issue_key: str, result: bool):
     }
     auth = (JIRA_EMAIL, JIRA_API_TOKEN)
 
-    # ✅ Atlassian Document Format (ADF) 구조
+    # Atlassian Document Format (ADF) 구조
     payload = {
         "body": {
             "type": "doc",
@@ -58,7 +58,7 @@ def transition_issue(issue_key: str, result: bool):
 
     transitions = res.json().get("transitions", [])
     
-    # ✅ 전환할 상태 이름 설정 (상황에 따라 커스터마이징 가능)
+    # 전환할 상태 이름 설정 (상황에 따라 커스터마이징 가능)
     target_name = "완료" if result else "진행 중"
     
     transition_id = None
