@@ -2,6 +2,11 @@
 
 import requests
 from data.jira_config import JIRA_BASE_URL, JIRA_EMAIL, JIRA_API_TOKEN
+import logging
+
+# 로깅 설정 (이미 되어 있다면 생략)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # 이슈에 코멘트를 등록하는 함수
 def post_comment_to_jira(issue_key: str, headers: dict, auth: tuple, payload: dict):
@@ -13,7 +18,7 @@ def post_comment_to_jira(issue_key: str, headers: dict, auth: tuple, payload: di
     - payload: ADF 문서 형식의 댓글 데이터
     """
     url = f"{JIRA_BASE_URL}/rest/api/3/issue/{issue_key}/comment"
-    print(auth)  # 디버깅 용도, 실제 배포 전에는 제거 또는 logging으로 대체
+    logger.debug(f"[{issue_key}] POST 코멘트 인증 정보: {auth}")        # 디버깅 용도, 실제 배포 전에는 제거 또는 logging으로 대체
     return requests.post(url, headers=headers, auth=auth, json=payload)
 
 # 전환 가능한 상태(Transition 목록)를 가져오는 함수
@@ -25,7 +30,7 @@ def get_transitions(issue_key: str, headers: dict, auth: tuple):
     - auth: 인증 정보
     """
     url = f"{JIRA_BASE_URL}/rest/api/3/issue/{issue_key}/transitions"
-    print(auth)
+    logger.debug(f"[{issue_key}] GET 전환 목록 인증 정보: {auth}")        # 디버깅 용도, 실제 배포 전에는 제거 또는 logging으로 대체
     return requests.get(url, headers=headers, auth=auth)
 
 # 이슈 상태를 전환하는 함수
@@ -39,5 +44,5 @@ def transition_issue(issue_key: str, transition_id: str, headers: dict, auth: tu
     """
     url = f"{JIRA_BASE_URL}/rest/api/3/issue/{issue_key}/transitions"
     payload = {"transition": {"id": transition_id}}
-    print(auth)
+    logger.debug(f"[{issue_key}] POST 상태 전환 인증 정보: {auth}")        # 디버깅 용도, 실제 배포 전에는 제거 또는 logging으로 대체
     return requests.post(url, headers=headers, auth=auth, json=payload)

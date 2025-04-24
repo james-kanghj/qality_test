@@ -11,6 +11,12 @@ JIRA_BASE_URL = os.environ.get("JIRA_BASE_URL")        # ex: https://jamescompan
 JIRA_EMAIL = os.environ.get("JIRA_EMAIL")              # ex: jamescompanykr@gmail.com  
 JIRA_API_TOKEN = os.environ.get("JIRA_API_TOKEN")      # Atlassian에서 발급한 API 토큰
 
+# 혹시 모를 따옴표 포함 문자열 대비하여 추가 정제
+if JIRA_EMAIL:
+    JIRA_EMAIL = JIRA_EMAIL.strip('"')
+if JIRA_API_TOKEN:
+    JIRA_API_TOKEN = JIRA_API_TOKEN.strip('"')
+    
 # 불러온 값들을 확인용으로 출력 (개발 시 확인용, 실제 배포 시에는 보안을 위해 제거 권장)
 print("🔎 BASE_URL:", repr(JIRA_BASE_URL))             # URL 문자열이 제대로 로드되었는지 확인
 print("🔎 EMAIL:", repr(JIRA_EMAIL))                   # 이메일 형식 확인

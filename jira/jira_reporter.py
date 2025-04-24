@@ -2,21 +2,7 @@
 
 import os
 import logging
-from dotenv import load_dotenv
-from jira.jira_helper import post_comment_to_jira, get_transitions, transition_issue
-
-# .env 파일로부터 Jira API 인증 정보 불러오기
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../.env"))
-
-JIRA_BASE_URL = os.getenv("JIRA_BASE_URL")
-JIRA_EMAIL = os.getenv("JIRA_EMAIL").strip()
-JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN").strip()
-
-# 혹시 모를 따옴표 포함 문자열 대비하여 추가 정제
-if JIRA_EMAIL:
-    JIRA_EMAIL = JIRA_EMAIL.strip('"')
-if JIRA_API_TOKEN:
-    JIRA_API_TOKEN = JIRA_API_TOKEN.strip('"')
+from data.jira_config import JIRA_BASE_URL, JIRA_EMAIL, JIRA_API_TOKEN
 
 # 테스트 실패 결과를 기록할 로컬 로그 설정
 logging.basicConfig(
