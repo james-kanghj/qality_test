@@ -9,7 +9,7 @@ JIRA_BASE_URL = os.getenv("JIRA_BASE_URL")
 JIRA_EMAIL = os.getenv("JIRA_EMAIL").strip()
 JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN").strip()
 
-# ✅ 문자열 양끝의 불필요한 따옴표 제거
+# 문자열 양끝의 불필요한 따옴표 제거
 if JIRA_EMAIL:
     JIRA_EMAIL = JIRA_EMAIL.strip('"')
 if JIRA_API_TOKEN:
