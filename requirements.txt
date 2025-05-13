@@ -1,2 +1,4 @@
-uv pip install python-dotenv playwright pytest requests
-playwright install
+python-dotenv
+playwright
+pytest
+requests

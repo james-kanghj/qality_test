@@ -70,7 +70,7 @@ In the root directory, create a file named `.env` with the following:
 ```env
 JIRA_BASE_URL=https://your-domain.atlassian.net
 JIRA_EMAIL=your-email@example.com
-JIRA_API_TOKEN=your-api-token
+JIRA_API_TOKEN=your-jira-api-token
 ```
 
 ✅ This file is used to securely load Jira credentials for API access.
