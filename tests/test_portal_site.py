@@ -18,7 +18,7 @@ def browser():
 # QAP-1: 네이버에서 '날씨' 키워드를 입력하고 입력값이 제대로 반영됐는지 확인
 def test_keyword_input(browser):
     issue_key = "QAP-1"  # Jira 이슈 키
-    keyword = "날씨"     # 입력할 검색어
+    keyword = "Playwright"     # 입력할 검색어
     page = browser.new_page()
     page.goto("https://www.naver.com")
 
@@ -36,7 +36,7 @@ def test_keyword_input(browser):
 # QAP-2: 인코딩 오류 케이스를 시뮬레이션 하기 위해 일부러 실패 유도
 def test_korean_encoding(browser):
     issue_key = "QAP-2"
-    keyword = "날씨"
+    keyword = "Playwright"
     page = browser.new_page()
     page.goto("https://www.naver.com")
 
