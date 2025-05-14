@@ -76,25 +76,3 @@ def test_search_redirect(browser):
         debug_log = f"예외 발생: {str(e)}"
         report_result_to_jira(issue_key, False, debug_log)
         raise
-
-
-def test_aaaa(browser):
-    issue_key = "QAP-4"
-    keyword = "Playwright"
-    page = browser.new_page()
-    
-    try:
-        page.goto("https://naver.com")  # 실제 페이지 주소로 수정 필요
-
-        # 검색 input 요소에 검색어 입력
-        page.fill('#query', keyword)  # 또는 'input[name="query"]'
-
-        result = "query=" in page.url
-        # 필요한 후속 처리 (예: 결과 대기)
-        page.wait_for_timeout(3000)  # 결과 확인을 위한 대기 시간
-        report_result_to_jira(issue_key, result, debug_log)
-    except Exception as e:
-        # 예외가 발생하더라도 Jira에는 실패로 기록되도록 처리
-        debug_log = f"예외 발생: {str(e)}"
-        report_result_to_jira(issue_key, False, debug_log)
-        raise
